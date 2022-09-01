@@ -44,7 +44,8 @@ io.on('connection',function(socket) {
         //io.to : User who has joined can get a event;
         //socket.broadcast.to : all the users except the user who has joined will get the message
         // socket.broadcast.to(`${roomName}`).emit('newUserToChatRoom',userName);
-        io.to(`${roomName}`).emit('newUserToChatRoom',userName);
+   
+   //     io.to(`${roomName}`).emit('newUserToChatRoom',userName);
 
     })
 
@@ -59,22 +60,83 @@ io.on('connection',function(socket) {
         socket.leave(`${roomName}`)
     })
 
-    socket.on('newMessage',function(data) {
-        console.log('newMessage triggered')
+    socket.on('onCall',function(data) {
+        console.log('onCall triggered')
 
-        const messageData = JSON.parse(data)
-        const messageContent = messageData.messageContent
-        const roomName = messageData.roomName
+        // const messageData = JSON.parse(data)
+        // const messageContent = messageData.messageContent
+        // const roomName = messageData.roomName
+        
+        const candidateConstant = JSON.parse(data)
+        const roomName = candidateConstant.roomName
 
-        console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`)
+
+
+        console.log(`[Room Number ${roomName}]  : ${candidateConstant}`)
         
         // Just pass the data that has been passed from the writer socket
-        const chatData = {
-            userName : userName,
-            messageContent : messageContent,
-            roomName : roomName
-        }
-        socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
+        // const chatData = {
+        //     userName : userName,
+        //     messageContent : messageContent,
+        //     roomName : roomName
+        // }
+        // socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
+       
+        socket.to(`${roomName}`).emit('onCallReceived',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
+        
+    })
+
+
+    socket.on('onCandidates',function(data) {
+        console.log('message triggered')
+
+        // const messageData = JSON.parse(data)
+        // const messageContent = messageData.messageContent
+        // const roomName = messageData.roomName
+        
+        const candidateConstant = JSON.parse(data)
+        const roomName = candidateConstant.roomName
+
+
+
+        console.log(`[Room Number ${roomName}]  : ${candidateConstant}`)
+        
+        // Just pass the data that has been passed from the writer socket
+        // const chatData = {
+        //     userName : userName,
+        //     messageContent : messageContent,
+        //     roomName : roomName
+        // }
+        // socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
+       
+        socket.to(`${roomName}`).emit('onCallReceived',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
+        
+    })
+
+    socket.on('onEndCall',function(data) {
+        console.log('message triggered')
+
+        // const messageData = JSON.parse(data)
+        // const messageContent = messageData.messageContent
+        // const roomName = messageData.roomName
+        
+        const candidateConstant = JSON.parse(data)
+        const roomName = candidateConstant.roomName
+
+
+
+        console.log(`[Room Number ${roomName}]  : ${candidateConstant}`)
+        
+        // Just pass the data that has been passed from the writer socket
+        // const chatData = {
+        //     userName : userName,
+        //     messageContent : messageContent,
+        //     roomName : roomName
+        // }
+        // socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
+       
+        socket.to(`${roomName}`).emit('onCallReceived',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
+        
     })
 
     //If you want to add typing function you can make it like this.
