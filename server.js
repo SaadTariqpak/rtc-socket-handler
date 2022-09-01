@@ -1,13 +1,13 @@
-import express from 'express';
-import { urlencoded, json } from 'body-parser';
-import { listen } from 'socket.io';
+const express = require('express');
+const bodyParser = require('body-parser');
 
 
+const socketio = require('socket.io')
 var app = express();
 
-app.use(urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(json());
+app.use(bodyParser.json());
 
 
 var server = app.listen(3000,()=>{
@@ -17,7 +17,7 @@ var server = app.listen(3000,()=>{
 
 //Chat Server
 
-var io = listen(server)
+var io = socketio.listen(server)
 
 io.on('connection',function(socket) {
 
