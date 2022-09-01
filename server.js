@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 
-const socketio = require('socket.io')
+
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,10 +14,10 @@ var server = app.listen(3000,()=>{
     console.log('Server is running on port number 3000')
 })
 
-
+const io = require('socket.io')(server);
 //Chat Server
 
-var io = socketio.listen(server)
+//var io = socketio.listen(server)
 
 io.on('connection',function(socket) {
 
