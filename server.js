@@ -55,13 +55,13 @@ io.on('connection',function(socket) {
         const userName = room_data.userName;
         const roomName = room_data.roomName;
     
-        console.log(`Username : ${userName} leaved Room Name : ${roomName}`)
+        console.log(` leaved Room Name : ${roomName}`)
         socket.broadcast.to(`${roomName}`).emit('userLeftChatRoom',userName)
         socket.leave(`${roomName}`)
     })
 
     socket.on('onCall',function(data) {
-        console.log('onCall triggered')
+       
 
         // const messageData = JSON.parse(data)
         // const messageContent = messageData.messageContent
@@ -69,10 +69,12 @@ io.on('connection',function(socket) {
         
         const candidateConstant = JSON.parse(data)
         const roomName = candidateConstant.roomName
+        const type = candidateConstant.type
+        
+        console.log(`onCall triggered : Call Type => ${type}`)
 
 
-
-        console.log(`[Room Number ${roomName}]  : ${candidateConstant}`)
+        console.log(`[Room Number ${roomName}]  `)
         
         // Just pass the data that has been passed from the writer socket
         // const chatData = {
