@@ -71,10 +71,8 @@ io.on('connection',function(socket) {
         const roomName = candidateConstant.roomName
         const type = candidateConstant.type
         
-        console.log(`onCall triggered : Call Type => ${type}`)
+        console.log(`onCall triggered : Room Number ${roomName} : Call Type => ${type}`)
 
-
-        console.log(`[Room Number ${roomName}]  `)
         
         // Just pass the data that has been passed from the writer socket
         // const chatData = {
@@ -89,8 +87,8 @@ io.on('connection',function(socket) {
     })
 
 
-    socket.on('onCandidates',function(data) {
-        console.log('message triggered')
+    socket.on('onCandidate',function(data) {
+      
 
         // const messageData = JSON.parse(data)
         // const messageContent = messageData.messageContent
@@ -98,10 +96,11 @@ io.on('connection',function(socket) {
         
         const candidateConstant = JSON.parse(data)
         const roomName = candidateConstant.roomName
+        const type = candidateConstant.type
 
 
+        console.log(`onCandidate triggered : Room Number ${roomName} : Candidate Type => ${type}`)
 
-        console.log(`[Room Number ${roomName}]  : ${candidateConstant}`)
         
         // Just pass the data that has been passed from the writer socket
         // const chatData = {
@@ -111,7 +110,7 @@ io.on('connection',function(socket) {
         // }
         // socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
        
-        socket.to(`${roomName}`).emit('onCallReceived',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
+        socket.to(`${roomName}`).emit('onCandidate',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
         
     })
 
