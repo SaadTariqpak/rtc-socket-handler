@@ -110,7 +110,7 @@ io.on('connection',function(socket) {
         // }
         // socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
        
-        socket.to(`${roomName}`).emit('onCandidate',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
+        socket.to(`${roomName}`).emit('onCandidateReceived',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
         
     })
 
