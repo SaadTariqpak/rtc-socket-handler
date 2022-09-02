@@ -115,7 +115,7 @@ io.on('connection',function(socket) {
     })
 
     socket.on('onEndCall',function(data) {
-        console.log('message triggered')
+      
 
         // const messageData = JSON.parse(data)
         // const messageContent = messageData.messageContent
@@ -126,7 +126,7 @@ io.on('connection',function(socket) {
 
 
 
-        console.log(`[Room Number ${roomName}]  : ${candidateConstant}`)
+        console.log(`onCandidate triggered : Room Number ${roomName} `)
         
         // Just pass the data that has been passed from the writer socket
         // const chatData = {
@@ -136,7 +136,7 @@ io.on('connection',function(socket) {
         // }
         // socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
        
-        socket.to(`${roomName}`).emit('onCallReceived',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
+        socket.to(`${roomName}`).emit('onEndCall',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
         
     })
 
