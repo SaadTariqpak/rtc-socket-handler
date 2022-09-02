@@ -114,7 +114,7 @@ io.on('connection',function(socket) {
         
     })
 
-    socket.on('onEndCall',function(data) {
+    socket.on('endCall',function(data) {
       
 
         // const messageData = JSON.parse(data)
