@@ -14,7 +14,12 @@ var server = app.listen(3000,()=>{
     console.log('Server is running on port number 3000')
 })
 
-const io = require('socket.io')(server);
+const io = require('socket.io')(server,{
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+      }
+});
 //Chat Server
 
 //var io = socketio.listen(server)
@@ -126,7 +131,7 @@ io.on('connection',function(socket) {
 
 
 
-        console.log(`onCandidate triggered : Room Number ${roomName} `)
+        console.log(`endCall triggered : Room Number ${roomName} `)
         
         // Just pass the data that has been passed from the writer socket
         // const chatData = {
