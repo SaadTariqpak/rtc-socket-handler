@@ -16,7 +16,7 @@ var server = app.listen(3000,()=>{
 
 const io = require('socket.io')(server,{
     cors: {
-        origin: "http://localhost:80",
+        origin: "http://157.230.202.1:80",
         methods: ["GET", "POST"]
       }
 });
