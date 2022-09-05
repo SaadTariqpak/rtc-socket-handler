@@ -14,12 +14,15 @@ var server = app.listen(3000,()=>{
     console.log('Server is running on port number 3000')
 })
 
-const io = require('socket.io')(server,{
-    cors: {
-        origin: "http://157.230.202.1:80",
-        methods: ["GET", "POST"]
-      }
-});
+const io = require('socket.io')(server);
+
+//If next update not work then revert it
+//     ,{
+//     cors: {
+//         origin: "http://157.230.202.1:80",
+//         methods: ["GET", "POST"]
+//       }
+// });
 //Chat Server
 
 //var io = socketio.listen(server)
