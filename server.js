@@ -34,8 +34,7 @@ io.on('connection',function(socket) {
     console.log(`Connection : SocketId = ${socket.id}`)
     //Since we are going to use userName through whole socket connection, Let's make it global.   
     var userName = '';
-    console.log('Hello 1')
-        
+   
     socket.on('subscribe', function(data) {
         
         console.log('subscribe trigged')
@@ -55,8 +54,10 @@ io.on('connection',function(socket) {
         //socket.broadcast.to : all the users except the user who has joined will get the message
         // socket.broadcast.to(`${roomName}`).emit('newUserToChatRoom',userName);
    
-   //     io.to(`${roomName}`).emit('newUserToChatRoom',userName);
-
+   
+       // sending to all clients in room(channel) except sender
+       socket.broadcast.to(`${roomName}`).emit('onOtherUserJoinedCall', JSON.stringify(room_data));
+   
     })
 
     socket.on('unsubscribe',function(data) {
@@ -92,7 +93,7 @@ io.on('connection',function(socket) {
         // }
         // socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
        
-        socket.to(`${roomName}`).emit('onCallReceived',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
+        socket.broadcast.to(`${roomName}`).emit('onCallReceived',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
         
     })
 
@@ -120,7 +121,7 @@ io.on('connection',function(socket) {
         // }
         // socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
        
-        socket.to(`${roomName}`).emit('onCandidateReceived',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
+        socket.broadcast.to(`${roomName}`).emit('onCandidateReceived',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
         
     })
 
@@ -146,7 +147,7 @@ io.on('connection',function(socket) {
         // }
         // socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
        
-        socket.to(`${roomName}`).emit('onEndCall',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
+        socket.broadcast.to(`${roomName}`).emit('onEndCall',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
         
     })
 
