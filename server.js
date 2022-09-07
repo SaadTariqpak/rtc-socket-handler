@@ -67,7 +67,7 @@ io.on('connection',function(socket) {
         const roomName = room_data.roomName;
     
         console.log(` leaved Room Name : ${roomName}`)
-        socket.broadcast.to(`${roomName}`).emit('userLeftChatRoom',userName)
+        socket.broadcast.to(`${roomName}`).emit('onEndCall',JSON.stringify(room_data))
         socket.leave(`${roomName}`)
     })
 
@@ -125,31 +125,31 @@ io.on('connection',function(socket) {
         
     })
 
-    socket.on('endCall',function(data) {
+    // socket.on('endCall',function(data) {
       
 
-        // const messageData = JSON.parse(data)
-        // const messageContent = messageData.messageContent
-        // const roomName = messageData.roomName
+    //     // const messageData = JSON.parse(data)
+    //     // const messageContent = messageData.messageContent
+    //     // const roomName = messageData.roomName
         
-        const candidateConstant = JSON.parse(data)
-        const roomName = candidateConstant.roomName
+    //     const mData = JSON.parse(data)
+    //     const roomName = mData.roomName
 
 
 
-        console.log(`endCall triggered : Room Number ${roomName} `)
+    //     console.log(`endCall triggered : Room Number ${roomName} `)
         
-        // Just pass the data that has been passed from the writer socket
-        // const chatData = {
-        //     userName : userName,
-        //     messageContent : messageContent,
-        //     roomName : roomName
-        // }
-        // socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
+    //     // Just pass the data that has been passed from the writer socket
+    //     // const chatData = {
+    //     //     userName : userName,
+    //     //     messageContent : messageContent,
+    //     //     roomName : roomName
+    //     // }
+    //     // socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
        
-        socket.broadcast.to(`${roomName}`).emit('onEndCall',JSON.stringify(candidateConstant)) // Need to be parsed into Kotlin object in Kotlin
+    //     socket.broadcast.to(`${roomName}`).emit('onEndCall',JSON.stringify(mData)) // Need to be parsed into Kotlin object in Kotlin
         
-    })
+    // })
 
     //If you want to add typing function you can make it like this.
     
