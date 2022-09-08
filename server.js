@@ -60,7 +60,7 @@ io.on('connection',function(socket) {
             
             socket.join(`${roomName}`)
             console.log(`One User joined the Room Name : ${roomName}`)
-        
+            socket.broadcast.to(`${roomName}`).emit('onOtherUserJoinedCall', JSON.stringify(room_data));
         }
 
         
@@ -75,7 +75,7 @@ io.on('connection',function(socket) {
    
    
        // sending to all clients in room(channel) except sender
-       socket.broadcast.to(`${roomName}`).emit('onOtherUserJoinedCall', JSON.stringify(room_data));
+      
    
     })
 
