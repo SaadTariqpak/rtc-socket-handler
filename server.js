@@ -38,12 +38,31 @@ io.on('connection',function(socket) {
     socket.on('subscribe', function(data) {
         
         console.log('subscribe trigged')
+        
         const room_data = JSON.parse(data)
+        
         userName = room_data.userName;
         const roomName = room_data.roomName;
-    
-        socket.join(`${roomName}`)
-        console.log(`One User joined the Room Name : ${roomName}`)
+
+        if( room_data.isParentJoiningExistingCall == "true") {
+
+             if(io.sockets.adapter.rooms.get(`${roomName}`)){
+                socket.join(`${roomName}`)
+                console.log(`One User joined the Room Name : ${roomName}`)
+        
+             }else{
+                socket.emit('onRoomNotExist', "Room does not exist!");
+                console.log(`Room does not exist`)
+        
+             }
+
+        }else{
+            
+            socket.join(`${roomName}`)
+            console.log(`One User joined the Room Name : ${roomName}`)
+        
+        }
+
         
        
         // Let the other user get notification that user got into the room;
