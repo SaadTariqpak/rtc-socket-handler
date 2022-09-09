@@ -63,7 +63,7 @@ io.on("connection", function (socket) {
       if (!doesRoomExist(roomName)) {
         const userData = new User({
           device_id: deviceId,
-          deviceName: deviceName
+          device_name: deviceName
         })
 
         try {
