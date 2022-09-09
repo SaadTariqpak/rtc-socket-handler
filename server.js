@@ -103,7 +103,11 @@ io.on("connection", function (socket) {
         .to(`${roomName}`)
         .emit("onOtherUserJoinedCall", JSON.stringify(room_data));
 
+      socket.emit('onChildUserData', JSON.stringify(room_data));
+
     }
+
+
 
   });
 
@@ -175,7 +179,7 @@ function doesRoomExist(roomName) {
 }
 
 function updateUser(user, cb) {
-  
+
   User.find({ device_id: user.device_id }, function (err, docs) {
     if (docs.length) {
       cb(docs._id);
