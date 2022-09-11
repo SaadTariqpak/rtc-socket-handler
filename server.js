@@ -49,7 +49,7 @@ io.on("connection", function (socket) {
       if (tempRoomExist) {
 
         socket.join(`${roomName}`);
-        console.log(`One User joined the Room Name : ${roomName}`);
+        console.log(`1One User joined the Room Name : ${roomName}`);
 
       } else {
 
@@ -60,7 +60,7 @@ io.on("connection", function (socket) {
 
     } else {
       socket.join(`${roomName}`);
-      console.log(`One User joined the Room Name : ${roomName}`);
+      console.log(`2One User joined the Room Name : ${roomName}`);
 
       if (!tempRoomExist) {
 
@@ -69,32 +69,26 @@ io.on("connection", function (socket) {
           device_name: deviceName
         })
 
-        try {
+        //Storing user data
 
-          //Storing user data
+        // userData.save().then(user => {
+        updateUser(userData, function (userId) {
+          console.log(userId);
 
-          // userData.save().then(user => {
-          updateUser(userData, function (userId) {
-            console.log(userId);
+          //   //creating meeting object
+          var meetingData = new Meeting({
+            meeting_id: roomName,
+            user_id: userId
+          })
 
-            //   //creating meeting object
-            var meetingData = new Meeting({
-              meeting_id: roomName,
-              user_id: userId
-            })
+          //Storing meeting object
+          addUpdateMeeting(meetingData)
 
-            //Storing meeting object
-            addUpdateMeeting(meetingData)
+        });
 
-          });
+        //res.status(200).json(dataToSave)
 
-          //res.status(200).json(dataToSave)
 
-        }
-        catch (error) {
-          console.log(error.message);
-
-        }
 
       } else {
 
@@ -211,16 +205,20 @@ function doesRoomExist(roomName) {
 function updateUser(user, cb) {
 
   User.findOne({ device_id: user.device_id }, function (err, user) {
-    if (user.length) {
-      cb(user._id);
-    } else {
-      user.save().then(user => {
+    if (err) throw err;
+    else {
 
-        console.log(user);
-
+      if (user.length) {
         cb(user._id);
-      });
+      } else {
+        user.save().then(user => {
 
+          console.log(user);
+
+          cb(user._id);
+        });
+
+      }
     }
   });
 }
