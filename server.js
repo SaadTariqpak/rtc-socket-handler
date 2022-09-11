@@ -75,7 +75,7 @@ io.on("connection", function (socket) {
 
           // userData.save().then(user => {
           updateUser(userData, function (userId) {
-            //   console.log(user._id);
+            console.log(userId);
 
             //   //creating meeting object
             var meetingData = new Meeting({
