@@ -103,9 +103,9 @@ io.on("connection", function (socket) {
             User.findById(docs[0].user_id, function (err, user) {
               if (err) throw err;
               else {
-                console.log(`Users ${user}`);
+                console.log(`User ${user}`);
 
-                room_data.deviceName = user[0].device_name
+                room_data.deviceName = user.device_name
 
                 //Parents callback
                 //Emit to request sender only if room exist
