@@ -103,7 +103,7 @@ io.on("connection", function (socket) {
 
           console.log(`Meetings ${meetingDocs}`);
 
-          User.find({ _id: meetingDocs[0].user_id }, function (err, userDocs) {
+          User.findById(meetingDocs[0].user_id, function (err, userDocs) {
 
             console.log(`Users ${userDocs}`);
 
