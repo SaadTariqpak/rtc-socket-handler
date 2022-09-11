@@ -228,7 +228,7 @@ function addUpdateMeeting(meeting) {
 
 
   Meeting.replaceOne({ user_id: meeting.user_id }, meeting, { upsert: true }, function (error, res) {
-    if (err) throw err;
+    if (error) throw err;
     else {
       console.log(`addUpdateMeeting ${res}`);
 
