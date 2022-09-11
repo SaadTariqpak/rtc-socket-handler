@@ -214,6 +214,9 @@ function updateUser(user, cb) {
       cb(docs._id);
     } else {
       user.save().then(user => {
+
+        console.log(user);
+
         cb(user._id);
       });
 
