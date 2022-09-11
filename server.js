@@ -41,12 +41,12 @@ io.on("connection", function (socket) {
     const deviceId = room_data.deviceId;
     const deviceName = room_data.deviceName;
 
-
+    const tempRoomExist = doesRoomExist(roomName);
 
     // Condition to check if room/call exist if parent return to monitor its baby
     if (room_data.isParentJoiningExistingCall == "true") {
 
-      if (doesRoomExist(roomName)) {
+      if (tempRoomExist) {
 
         socket.join(`${roomName}`);
         console.log(`One User joined the Room Name : ${roomName}`);
@@ -59,15 +59,17 @@ io.on("connection", function (socket) {
       }
 
     } else {
+      socket.join(`${roomName}`);
+      console.log(`One User joined the Room Name : ${roomName}`);
 
-      if (!doesRoomExist(roomName)) {
+      if (!tempRoomExist) {
+
         const userData = new User({
           device_id: deviceId,
           device_name: deviceName
         })
 
         try {
-
 
           //Storing user data
 
@@ -93,17 +95,18 @@ io.on("connection", function (socket) {
           res.status(400).json({ message: error.message })
         }
 
+      } else {
+        //Parents callback
+        //Emit to request sender only if room exist
+        socket.emit('onChildUserData', JSON.stringify(room_data));
       }
 
-      socket.join(`${roomName}`);
-
-      console.log(`One User joined the Room Name : ${roomName}`);
 
       socket.broadcast
         .to(`${roomName}`)
         .emit("onOtherUserJoinedCall", JSON.stringify(room_data));
 
-      socket.emit('onChildUserData', JSON.stringify(room_data));
+
 
     }
 
