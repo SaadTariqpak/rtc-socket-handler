@@ -99,32 +99,33 @@ io.on("connection", function (socket) {
       } else {
 
 
-        // executes, passing results to callback
-        // Meeting.find({ meeting_id: roomName }, function (err, docs) {
+        //executes, passing results to callback
+        Meeting.find({ meeting_id: roomName }, function (err, docs) {
 
-        //   if (err) throw err;
-        //   else {
-        //     console.log(`Meetings ${docs[0]}`);
+          if (err) throw err;
+          else {
+            console.log(`Meetings ${docs[0]}`);
 
-        //     User.findById(docs[0].user_id, function (err, user) {
-        //       if (err) throw err;
-        //       else {
-        //         console.log(`Users ${user}`);
+            User.findById(docs[0].user_id, function (err, user) {
+              if (err) throw err;
+              else {
+                console.log(`Users ${user}`);
 
-        //         room_data.deviceName = user[0].device_name
+                room_data.deviceName = user[0].device_name
 
-        //         //Parents callback
-        //         //Emit to request sender only if room exist
-        //         socket.emit('onChildUserData', JSON.stringify(room_data));
+                //Parents callback
+                //Emit to request sender only if room exist
+                socket.emit('onChildUserData', JSON.stringify(room_data));
 
-        //       }
-        //     });
-        //   }
-        // });
-        Meeting.find({}, function (err, docs) {
-          console.log(`Meetings ${docs}`);
+              }
+            });
+          }
         });
-        socket.emit('onChildUserData', JSON.stringify(room_data));
+
+        // Meeting.find({}, function (err, docs) {
+        //   console.log(`Meetings ${docs}`);
+        // });
+        // socket.emit('onChildUserData', JSON.stringify(room_data));
       }
 
 
@@ -229,9 +230,6 @@ function addUpdateMeeting(meeting) {
 
   Meeting.replaceOne({ user_id: meeting.user_id }, meeting, { upsert: true }, function (error, res) {
     if (error) throw err;
-    else {
-      console.log(`addUpdateMeeting ${res}`);
 
-    }
   });
 }
