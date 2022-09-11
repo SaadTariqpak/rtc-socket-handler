@@ -101,20 +101,24 @@ io.on("connection", function (socket) {
         // executes, passing results to callback
         Meeting.find({ meeting_id: roomName }, function (err, docs) {
 
-          console.log(`Meetings ${docs}`);
+          if (err) throw err;
+          else {
+            console.log(`Meetings ${docs}`);
 
-          User.findById(docs[0].user_id, function (err, user) {
+            User.findById(docs[0].user_id, function (err, user) {
+              if (err) throw err;
+              else {
+                console.log(`Users ${user}`);
 
-            console.log(`Users ${user}`);
+                room_data.deviceName = user[0].device_name
 
-            room_data.deviceName = user[0].device_name
+                //Parents callback
+                //Emit to request sender only if room exist
+                socket.emit('onChildUserData', JSON.stringify(room_data));
 
-            //Parents callback
-            //Emit to request sender only if room exist
-            socket.emit('onChildUserData', JSON.stringify(room_data));
-
-
-          });
+              }
+            });
+          }
         });
 
 
