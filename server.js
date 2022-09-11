@@ -96,9 +96,28 @@ io.on("connection", function (socket) {
         }
 
       } else {
-        //Parents callback
-        //Emit to request sender only if room exist
-        socket.emit('onChildUserData', JSON.stringify(room_data));
+
+
+        // executes, passing results to callback
+        Meeting.find({ meeting_id: roomName }, function (err, meetingDocs) {
+
+          console.log(`Meetings ${meetingDocs}`);
+
+          User.find({ _id: meetingDocs[0].user_id }, function (err, userDocs) {
+
+            console.log(`Users ${userDocs}`);
+
+            room_data.deviceName = userDocs[0].device_name
+
+            //Parents callback
+            //Emit to request sender only if room exist
+            socket.emit('onChildUserData', JSON.stringify(room_data));
+
+
+          });
+        });
+
+
       }
 
 
