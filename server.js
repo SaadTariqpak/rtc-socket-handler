@@ -209,9 +209,9 @@ function doesRoomExist(roomName) {
 
 function updateUser(user, cb) {
 
-  User.find({ device_id: user.device_id }, function (err, docs) {
-    if (docs.length) {
-      cb(docs._id);
+  User.findOne({ device_id: user.device_id }, function (err, user) {
+    if (user.length) {
+      cb(user._id);
     } else {
       user.save().then(user => {
 
