@@ -99,15 +99,15 @@ io.on("connection", function (socket) {
 
 
         // executes, passing results to callback
-        Meeting.find({ meeting_id: roomName }, function (err, meetingDocs) {
+        Meeting.find({ meeting_id: roomName }, function (err, docs) {
 
-          console.log(`Meetings ${meetingDocs}`);
+          console.log(`Meetings ${docs}`);
 
-          User.findById(meetingDocs[0].user_id, function (err, userDocs) {
+          User.findById(docs[0].user_id, function (err, user) {
 
-            console.log(`Users ${userDocs}`);
+            console.log(`Users ${user}`);
 
-            room_data.deviceName = userDocs[0].device_name
+            room_data.deviceName = user[0].device_name
 
             //Parents callback
             //Emit to request sender only if room exist
