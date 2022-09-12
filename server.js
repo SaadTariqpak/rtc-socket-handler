@@ -71,6 +71,9 @@ io.on("connection", function (socket) {
 
         //Storing user data
 
+        console.log(`user going to store `);
+        console.log(userData);
+        
         // userData.save().then(user => {
         updateUser(userData, function (userId) {
           console.log(userId);
