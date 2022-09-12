@@ -211,13 +211,13 @@ function updateUser(mUser, cb) {
     if (err) throw err;
     else {
 
-      console.log(mUser);
-      console.log(user);
+      // console.log(mUser);
+      // console.log(user);
 
       if (user) {
         cb(user._id);
       } else {
-        user.save(function (err, doc) {
+        mUser.save(function (err, doc) {
           if (err) return console.error(err);
 
           console.log(doc);
