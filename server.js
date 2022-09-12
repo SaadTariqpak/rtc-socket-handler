@@ -208,7 +208,7 @@ function updateUser(user, cb) {
     if (err) throw err;
     else {
 
-      if (user.length) {
+      if (user) {
         cb(user._id);
       } else {
         user.save().then(user => {
