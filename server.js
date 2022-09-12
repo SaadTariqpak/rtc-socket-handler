@@ -211,6 +211,7 @@ function updateUser(mUser, cb) {
     if (err) throw err;
     else {
 
+      console.log(mUser);
       console.log(user);
 
       if (user) {
