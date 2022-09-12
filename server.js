@@ -73,7 +73,7 @@ io.on("connection", function (socket) {
 
         console.log(`user going to store `);
         console.log(userData);
-        
+
         // userData.save().then(user => {
         updateUser(userData, function (userId) {
           console.log(userId);
@@ -205,21 +205,31 @@ function doesRoomExist(roomName) {
   else return false;
 }
 
-function updateUser(user, cb) {
+function updateUser(mUser, cb) {
 
-  User.findOne({ device_id: user.device_id }, function (err, user) {
+  User.findOne({ device_id: mUser.device_id }, function (err, user) {
     if (err) throw err;
     else {
 
       if (user) {
         cb(user._id);
       } else {
-        user.save().then(user => {
+        user.save(function (err, doc) {
+          if (err) return console.error(err);
 
-          console.log(user);
+          console.log(doc);
+          cb(doc._id);
 
-          cb(user._id);
         });
+
+
+
+        // ).then(user => {
+
+        //   console.log(user);
+
+        //   cb(user._id);
+        // });
 
       }
     }
