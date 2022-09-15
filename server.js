@@ -183,6 +183,17 @@ io.on("connection", function (socket) {
     socket.broadcast.to(`${roomName}`).emit("onEndCall", JSON.stringify(mData)); // Need to be parsed into Kotlin object in Kotlin
   });
 
+
+  socket.on("changeControls", function (data) {
+    const mData = JSON.parse(data);
+    const roomName = mData.roomName;
+
+    console.log(`changeControls triggered : Room Number ${roomName} `);
+    socket.broadcast.to(`${roomName}`).emit("onChangeControls", JSON.stringify(mData)); // Need to be parsed into Kotlin object in Kotlin
+
+  });
+
+
   //If you want to add typing function you can make it like this.
 
   // socket.on('typing',function(roomNumber){ //Only roomNumber is needed here
