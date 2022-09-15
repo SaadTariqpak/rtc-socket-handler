@@ -189,7 +189,7 @@ io.on("connection", function (socket) {
     const roomName = mData.roomName;
 
     console.log(`changeControls triggered : Room Number ${roomName} `);
-    socket.broadcast.to(`${roomName}`).emit("onChangeControls", JSON.stringify(mData)); // Need to be parsed into Kotlin object in Kotlin
+    socket.to(`${roomName}`).emit("onChangeControls", JSON.stringify(mData)); // Need to be parsed into Kotlin object in Kotlin
 
   });
 
