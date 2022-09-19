@@ -91,7 +91,8 @@ io.on("connection", function (socket) {
 
         //res.status(200).json(dataToSave)
 
-
+        //Now meeting created Sending reponse back to child to show qr code 
+        socket.emit('onMeetingJoined', JSON.stringify(room_data)); //sending to sender-client only
 
       } else {
 
@@ -123,14 +124,16 @@ io.on("connection", function (socket) {
         //   console.log(`Meetings ${docs}`);
         // });
         // socket.emit('onChildUserData', JSON.stringify(room_data));
+
+        socket.broadcast
+          .to(`${roomName}`)
+          .emit("onOtherUserJoinedCall", JSON.stringify(room_data));
+
       }
 
-
-      socket.broadcast
-        .to(`${roomName}`)
-        .emit("onOtherUserJoinedCall", JSON.stringify(room_data));
-
-
+      // socket.broadcast
+      //   .to(`${roomName}`)
+      //   .emit("onOtherUserJoinedCall", JSON.stringify(room_data));
 
     }
 
