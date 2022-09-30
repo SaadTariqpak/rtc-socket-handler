@@ -197,6 +197,17 @@ io.on("connection", function (socket) {
   });
 
 
+
+ socket.on("babyVoiceEvents", function (data) {
+    const mData = JSON.parse(data);
+    const roomName = mData.roomName;
+
+    console.log(`babyVoiceEvents triggered : Room Number ${roomName} `);
+    socket.to(`${roomName}`).emit("onBabyVoiceEvents", JSON.stringify(mData)); // Need to be parsed into Kotlin object in Kotlin
+
+  });
+
+
   //If you want to add typing function you can make it like this.
 
   // socket.on('typing',function(roomNumber){ //Only roomNumber is needed here
